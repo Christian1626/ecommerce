@@ -1,0 +1,20 @@
+ecommerce_homepage:
+    path:     /
+    defaults: { _controller: EcommerceBundle:Produits:produits }
+    
+ecommerce_produit:
+    path:     /produit
+    defaults: { _controller: EcommerceBundle:Produits:produit }
+    
+ecommerce_panier:
+    path:     /panier
+    defaults: { _controller: EcommerceBundle:Panier:panier }
+    
+    
+ecommerce_livraison:
+    path:     /livraison
+    defaults: { _controller: EcommerceBundle:Panier:livraison }
+
+ecommerce_validation:
+    path:     /validation
+    defaults: { _controller: EcommerceBundle:Panier:validation }
