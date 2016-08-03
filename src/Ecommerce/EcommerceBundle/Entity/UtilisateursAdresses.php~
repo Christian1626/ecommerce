@@ -277,27 +277,4 @@ class UtilisateursAdresses
     {
         return $this->complement;
     }
-
-    /**
-     * Set utilisateur
-     *
-     * @param \Utilisateurs\UtilisateursBundle\Entity\Utilisateurs $utilisateur
-     * @return UtilisateursAdresses
-     */
-    public function setUtilisateur(\Utilisateurs\UtilisateursBundle\Entity\Utilisateurs $utilisateur = null)
-    {
-        $this->utilisateur = $utilisateur;
-
-        return $this;
-    }
-
-    /**
-     * Get utilisateur
-     *
-     * @return \Utilisateurs\UtilisateursBundle\Entity\Utilisateurs 
-     */
-    public function getUtilisateur()
-    {
-        return $this->utilisateur;
-    }
 }
