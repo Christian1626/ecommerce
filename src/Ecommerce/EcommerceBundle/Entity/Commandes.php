@@ -40,7 +40,7 @@ class Commandes
      *
      * @ORM\Column(name="preference", type="integer")
      */
-    private $preference;
+    private $reference;
 
     /**
      * @var array
@@ -179,5 +179,28 @@ class Commandes
     public function getUtilisateur()
     {
         return $this->utilisateur;
+    }
+
+    /**
+     * Set reference
+     *
+     * @param integer $reference
+     * @return Commandes
+     */
+    public function setReference($reference)
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
+
+    /**
+     * Get reference
+     *
+     * @return integer 
+     */
+    public function getReference()
+    {
+        return $this->reference;
     }
 }
