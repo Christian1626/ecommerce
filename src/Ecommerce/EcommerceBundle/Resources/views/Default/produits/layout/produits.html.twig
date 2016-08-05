@@ -3,109 +3,30 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            {% include '::/moduleUsed/navigation.html.twig' %}
+            <div class="span3">
+                {% include '::/moduleUsed/navigation.html.twig' %}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {% include 'UtilisateursBundle:Default:modulesUsed/utilisateursConnecte.html.twig' %}
+                {% else %}
+                    {% include 'UtilisateursBundle:Default:modulesUsed/utilisateurs.html.twig' %}
+                {% endif %}
+            </div>
             <div class="span9">
-
+                {% if produits|length != 0 %}
                 <ul class="thumbnails">
+                    {% for produit in produits %}
                     <li class="span3">
                         <div class="thumbnail">
-                            <img src="{{ asset('img/holder.png') }}" alt="DevAndClick" width="300" height="300">
+                            <img src="{{ produit.image.path }}" alt="{{ produit.image.alt }}" width="300" height="150">
                             <div class="caption">
-                                <h4>Thumbnail label</h4>
-                                <p>100,00 €</p>
-                                <a class="btn btn-primary" href="{{ path('ecommerce_produit') }}">Plus d'infos</a>
+                                <h4>{{ produit.nom }}</h4>
+                                <p>{{ produit.prix |tva(produit.tva.multiplicate)}}€</p>
+                                <a class="btn btn-primary" href="{{ path('ecommerce_produit',{'id':produit.id}) }}">Plus d'infos</a>
                                 <a class="btn btn-success" href="panier.php">Ajouter au panier</a>
                             </div>
                         </div>
                     </li>
-                    <li class="span3">
-                        <div class="thumbnail">
-                            <img src="{{ asset('img/holder.png') }}" alt="DevAndClick" width="300" height="300">
-                            <div class="caption">
-                                <h4>Thumbnail label</h4>
-                                <p>100,00 €</p>
-                                <a class="btn btn-primary" href="{{ path('ecommerce_produit') }}">Plus d'infos</a>
-                                <a class="btn btn-success" href="panier.php">Ajouter au panier</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="span3">
-                        <div class="thumbnail">
-                            <img src="{{ asset('img/holder.png') }}" alt="DevAndClick" width="300" height="300">
-                            <div class="caption">
-                                <h4>Thumbnail label</h4>
-                                <p>Euro 100,00</p>
-                                <a class="btn btn-primary" href="{{ path('ecommerce_produit') }}">Plus d'infos</a>
-                                <a class="btn btn-success" href="panier.php">Ajouter au panier</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="span3">
-                        <div class="thumbnail">
-                            <img src="{{ asset('img/holder.png') }}" alt="DevAndClick" width="300" height="300">
-                            <div class="caption">
-                                <h4>Thumbnail label</h4>
-                                <p>100,00 €</p>
-                                <a class="btn btn-primary" href="{{ path('ecommerce_produit') }}">Plus d'infos</a>
-                                <a class="btn btn-success" href="panier.php">Ajouter au panier</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="span3">
-                        <div class="thumbnail">
-                            <img src="{{ asset('img/holder.png') }}" alt="DevAndClick" width="300" height="300">
-                            <div class="caption">
-                                <h4>Thumbnail label</h4>
-                                <p>100,00 €</p>
-                                <a class="btn btn-primary" href="{{ path('ecommerce_produit') }}">Plus d'infos</a>
-                                <a class="btn btn-success" href="panier.php">Ajouter au panier</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="span3">
-                        <div class="thumbnail">
-                            <img src="{{ asset('img/holder.png') }}" alt="DevAndClick" width="300" height="300">
-                            <div class="caption">
-                                <h4>Thumbnail label</h4>
-                                <p>Euro 100,00</p>
-                                <a class="btn btn-primary" href="{{ path('ecommerce_produit') }}">Plus d'infos</a>
-                                <a class="btn btn-success" href="panier.php">Ajouter au panier</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="span3">
-                        <div class="thumbnail">
-                            <img src="{{ asset('img/holder.png') }}" alt="DevAndClick" width="300" height="300">
-                            <div class="caption">
-                                <h4>Thumbnail label</h4>
-                                <p>100,00 €</p>
-                                <a class="btn btn-primary" href="{{ path('ecommerce_produit') }}">Plus d'infos</a>
-                                <a class="btn btn-success" href="panier.php">Ajouter au panier</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="span3">
-                        <div class="thumbnail">
-                            <img src="{{ asset('img/holder.png') }}" alt="DevAndClick" width="300" height="300">
-                            <div class="caption">
-                                <h4>Thumbnail label</h4>
-                                <p>Euro 100,00</p>
-                                <a class="btn btn-primary" href="{{ path('ecommerce_produit') }}">Plus d'infos</a>
-                                <a class="btn btn-success" href="panier.php">Ajouter au panier</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="span3">
-                        <div class="thumbnail">
-                            <img src="{{ asset('img/holder.png') }}" alt="DevAndClick" width="300" height="300">
-                            <div class="caption">
-                                <h4>Thumbnail label</h4>
-                                <p>100,00 €</p>
-                                <a class="btn btn-primary" href="{{ path('ecommerce_produit') }}">Plus d'infos</a>
-                                <a class="btn btn-success" href="panier.php">Ajouter au panier</a>
-                            </div>
-                        </div>
-                    </li>
+                        {% endfor %}
                 </ul>
 
                 <div class="pagination">
@@ -119,7 +40,10 @@
                         <li><a href="#">Suivant</a></li>
                     </ul>
                 </div>
-
+                
+                {%  else %}
+                    <h4>Aucun produit</h4>
+                {%  endif %}
             </div>
         </div>
     </div>

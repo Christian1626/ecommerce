@@ -23,7 +23,7 @@ class MediaData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($media3);
 
         $media4 = new Media();
-        $media4->setPath('http://www.princedebretagne-pro.com/medias/5114fcd91ae7e.JPGg');
+        $media4->setPath('http://www.princedebretagne-pro.com/medias/5114fcd91ae7e.JPG');
         $media4->setAlt('Piment');
         $manager->persist($media4);
 

@@ -2,7 +2,9 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block titre %}Ecommerce fruits et légumes{% endblock %}</title>
+        <meta name="keywords" content="{% block motsCles %} {% endblock %}" />
+        <meta name="description" content="{% block description %} {% endblock %}" />
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" />
@@ -21,10 +23,11 @@
                     </button>
                     <a class="brand" href="{{ path('ecommerce_homepage') }}">Ecommerce</a>
                     <div class="nav-collapse collapse">
-                        <form class="navbar-form form-search pull-right">
-                            <input id="Search" name="Search" type="text" class="input-medium search-query">
-                            <button type="submit" class="btn">Rechercher</button>
-                        </form>
+                        {#<form class="navbar-form form-search pull-right">#}
+                            {#<input id="Search" name="Search" type="text" class="input-medium search-query">#}
+                            {#<button type="submit" class="btn">Rechercher</button>#}
+                        {#</form>#}
+                        {{ render(controller('EcommerceBundle:Produits:recherche')) }}
                     </div>
                 </div>
             </div>
@@ -36,28 +39,24 @@
             <div class="container">
                 <div class="row">
                     <div class="span4 offset1">
-                        <h4>Informations</h4>
-                        <ul class="nav nav-stacked">
-                            <li><a href="texte.php">CGV</a>
-                            <li><a href="texte.php">Mentions légales</a>
-                        </ul>
+                        {{ render(controller('PagesBundle:Page:menu')) }}
                     </div>
 
                     <div class="span4">
                         <h4>Notre entrepôt</h4>
-                        <p><i class="icon-map-marker"></i>&nbsp;Paris 75 000 - 3 rue des jardins</p>
+                        <p><i class="icon-map-marker"></i>&nbsp;{{ adresse }}</p>
                     </div>
 
                     <div class="span2">
                         <h4>Nous contacter</h4>
-                        <p><i class="icon-phone"></i>&nbsp;Tel: 02 35 00 00 00</p>
-                        <p><i class="icon-print"></i>&nbsp;Fax: 02 35 00 00 00</p>
+                        <p><i class="icon-phone"></i>&nbsp;Tel: {{ telephone }}</p>
+                        <p><i class="icon-print"></i>&nbsp;Fax: {{ fax }}</p>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="span4">
-                        <p>&copy; Copyright 2014 - DevAndClick</p>
+                        <p>&copy; Copyright {{ "now"|date('Y') }} - DevAndClick</p>
                     </div>
                 </div>
             </div>

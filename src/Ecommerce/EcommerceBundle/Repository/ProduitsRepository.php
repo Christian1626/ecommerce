@@ -12,4 +12,24 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProduitsRepository extends EntityRepository
 {
+    public function byCategorie($categorie) {
+        $qb = $this->createQueryBuilder('produit')
+            ->select('produit')
+            ->where('produit.categorie = :categorie')
+            ->andWhere('produit.disponible = 1')
+            ->orderBy('produit.id')
+            ->setParameter('categorie',$categorie);
+        
+        return $qb->getQuery()->getResult();
+    }
+    
+    public function recherche($chaine) {
+        $qb = $this->createQueryBuilder('produit')
+            ->select('produit')
+            ->where('produit.nom like :chaine')
+            ->andWhere('produit.disponible = 1')
+            ->setParameter('chaine', $chaine.'%');
+        
+        return $qb->getQuery()->getResult();
+    }
 }

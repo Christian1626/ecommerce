@@ -3,7 +3,7 @@ ecommerce_homepage:
     defaults: { _controller: EcommerceBundle:Produits:produits }
     
 ecommerce_produit:
-    path:     /produit
+    path:     /produit/{id}
     defaults: { _controller: EcommerceBundle:Produits:produit }
     
 ecommerce_panier:
@@ -18,3 +18,12 @@ ecommerce_livraison:
 ecommerce_validation:
     path:     /validation
     defaults: { _controller: EcommerceBundle:Panier:validation }
+    
+categorieProduits:
+    path:     /categorie/{categorie}
+    defaults: { _controller: EcommerceBundle:Produits:categorie }
+    
+
+rechercheProduits:
+    path:     /recherche
+    defaults: { _controller: EcommerceBundle:Produits:rechercheTraitement }
