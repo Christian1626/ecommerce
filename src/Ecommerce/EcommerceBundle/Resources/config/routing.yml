@@ -27,3 +27,12 @@ categorieProduits:
 rechercheProduits:
     path:     /recherche
     defaults: { _controller: EcommerceBundle:Produits:rechercheTraitement }
+
+
+ajouter:
+    path:     /ajouter/{id}
+    defaults: { _controller: EcommerceBundle:Panier:ajouter}
+    
+supprimer:
+    path:     /supprimer/{id}
+    defaults: { _controller: EcommerceBundle:Panier:supprimer }

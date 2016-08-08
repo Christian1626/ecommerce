@@ -22,7 +22,7 @@
                                 <h4>{{ produit.nom }}</h4>
                                 <p>{{ produit.prix |tva(produit.tva.multiplicate)}}€</p>
                                 <a class="btn btn-primary" href="{{ path('ecommerce_produit',{'id':produit.id}) }}">Plus d'infos</a>
-                                <a class="btn btn-success" href="panier.php">Ajouter au panier</a>
+                                <a class="btn btn-success" href="{{ path('ajouter',{'id':produit.id}) }}">Ajouter au panier</a>
                             </div>
                         </div>
                     </li>
