@@ -9,10 +9,19 @@ class ProduitsController extends Controller
 {
     public function produitsAction()
     {
+        $session = $this->getRequest()->getSession();
+        
         $em = $this->getDoctrine()->getManager();
         $produits = $em->getRepository('EcommerceBundle:Produits')->findBy(array('disponible'=> 1));
-        
-        return $this->render('EcommerceBundle:Default:produits/layout/produits.html.twig',array('produits'=>$produits));
+        if($session->has('panier')) {
+            $panier = $session->get('panier');
+        } else {
+            $panier = false;
+        }
+
+
+
+        return $this->render('EcommerceBundle:Default:produits/layout/produits.html.twig',array('produits'=>$produits,'panier'=>$panier));
     }
 
     public function categorieAction($categorie)
@@ -27,11 +36,17 @@ class ProduitsController extends Controller
 
     public function produitAction($id)
     {
+        $session = $this->getRequest()->getSession();
         $em = $this->getDoctrine()->getManager();
         $produit = $em->getRepository('EcommerceBundle:Produits')->find($id);
         if(!$produit) throw  $this->createNotFoundException('La page n\'existe pas');
+        if($session->has('panier')) {
+            $panier = $session->get('panier');
+        } else {
+            $panier = false;
+        }
         
-        return $this->render('EcommerceBundle:Default:produits/layout/produit.html.twig',array('produit'=>$produit));
+        return $this->render('EcommerceBundle:Default:produits/layout/produit.html.twig',array('produit'=>$produit,'panier'=>$panier));
     }
 
     public function rechercheAction() {
@@ -40,6 +55,7 @@ class ProduitsController extends Controller
     }
     public function rechercheTraitementAction()
     {
+        $session = $this->getRequest()->getSession();
         $form = $this->createForm(new RechercheForm());
         $produits = null;
         if($this->get('request')->getMethod() == "POST") {
@@ -51,8 +67,13 @@ class ProduitsController extends Controller
                 $produits = $em->getRepository('EcommerceBundle:Produits')->findAll();
             }
         } else throw $this->createNotFoundException("La page n\'existe pas.");
+        if($session->has('panier')) {
+            $panier = $session->get('panier');
+        } else {
+            $panier = false;
+        }
 
-        return $this->render('EcommerceBundle:Default:produits/layout/produits.html.twig',array('produits'=>$produits));
+        return $this->render('EcommerceBundle:Default:produits/layout/produits.html.twig',array('produits'=>$produits,'panier'=>$panier));
     }
     
 }

@@ -46,12 +46,14 @@ class PanierController extends Controller
             if($this->getRequest()->query->get('qte') != null) {
                 $panier[$id] = $this->getRequest()->query->get('qte');;
             }
+            $this->get('session')->getFlashBag()->add('success',"Quantité ajouté avec succès");
         } else {
             if($this->getRequest()->query->get('qte') != null) {
                 $panier[$id] = $this->getRequest()->query->get('qte');
             } else {
                 $panier[$id] = 1;
             }
+            $this->get('session')->getFlashBag()->add('success',"Article ajouté avec succès");
         }
         
         $session->set('panier',$panier);
@@ -67,9 +69,23 @@ class PanierController extends Controller
         if(array_key_exists($id,$panier)){
             unset($panier[$id]);
             $session->set('panier',$panier);
+            $this->get('session')->getFlashBag()->add('success',"Article supprimé avec succès");
         }
 
         return $this->redirect($this->generateUrl('ecommerce_panier'));
+    }
+    
+    public function menuAction() {
+        $session = $this->getRequest()->getSession();
+
+        if(!$session->has('panier')) {
+            $article = 0;
+        } else {
+            $article = count($session->get(('panier')));
+        }
+
+        return $this->render('EcommerceBundle:Default:panier/modulesUsed/panier.html.twig',array('article'=>$article));
+        
     }
     
 }

@@ -11,6 +11,7 @@
                 {% else %}
                     {% include 'UtilisateursBundle:Default:modulesUsed/utilisateurs.html.twig' %}
                 {% endif %}
+                {% render(controller('EcommerceBundle:Panier:menu')) %}
             </div>
 
             <div class="span9">
@@ -24,17 +25,21 @@
                         <h5>{{ produit.categorie.nom }}</h5>
                         <p>{{ produit.description }}</p>
                         <h4>{{ produit.prix |tva(produit.tva.multiplicate)}}€</h4>
-                        <form action="{{ path('ajouter',{'id':produit.id}) }}" method="GET">
-                            <select name="qte" class="span1">
-                                {% for i in 1..10 %}
-                                    <option value="{{ i }}">{{ i }}</option>
-                                {% endfor %}
-                            </select>
-
-                            <div>
-                                <button class="btn btn-primary">Ajouter au panier</button>
-                            </div>
-                        </form>
+                        {% if panier[produit.id] is not defined %}
+                            <form action="{{ path('ajouter',{'id':produit.id}) }}" method="GET">
+                                <select name="qte" class="span1">
+                                    {% for i in 1..10 %}
+                                        <option value="{{ i }}">{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+    
+                                <div>
+                                    <button class="btn btn-primary">Ajouter au panier</button>
+                                </div>
+                            </form>
+                         {% else %}
+                             <button class="btn btn-primary">Le produit est déjà dans votre panier</button>
+                         {% endif %}
 
                     </div>
                 </div>
