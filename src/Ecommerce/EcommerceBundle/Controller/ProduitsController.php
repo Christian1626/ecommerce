@@ -2,37 +2,40 @@
 
 namespace Ecommerce\EcommerceBundle\Controller;
 
+use Ecommerce\EcommerceBundle\Entity\Categories;
 use Ecommerce\EcommerceBundle\Forms\RechercheForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ProduitsController extends Controller
 {
-    public function produitsAction()
+    
+    public function produitsAction(Categories $categorie = null)
     {
         $session = $this->getRequest()->getSession();
-        
         $em = $this->getDoctrine()->getManager();
-        $produits = $em->getRepository('EcommerceBundle:Produits')->findBy(array('disponible'=> 1));
+        if($categorie != null) {
+            $categorie = $em->getRepository('EcommerceBundle:Categories')->find($categorie);
+            if(!$categorie) throw  $this->createNotFoundException('La page n\'existe pas');
+            $produits = $em->getRepository('EcommerceBundle:Produits')->byCategorie($categorie);
+        } else {    $produits = $em->getRepository('EcommerceBundle:Produits')->findBy(array('disponible'=> 1));
+        }
         if($session->has('panier')) {
             $panier = $session->get('panier');
         } else {
             $panier = false;
         }
-
-
-
         return $this->render('EcommerceBundle:Default:produits/layout/produits.html.twig',array('produits'=>$produits,'panier'=>$panier));
     }
 
-    public function categorieAction($categorie)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $categorie = $em->getRepository('EcommerceBundle:Categories')->find($categorie);
-        if(!$categorie) throw  $this->createNotFoundException('La page n\'existe pas');
-        
-        $produits = $em->getRepository('EcommerceBundle:Produits')->byCategorie($categorie);
-        return $this->render('EcommerceBundle:Default:produits/layout/produits.html.twig',array('produits'=>$produits));
-    }
+//    public function categorieAction($categorie)
+//    {
+//        $em = $this->getDoctrine()->getManager();
+//        $categorie = $em->getRepository('EcommerceBundle:Categories')->find($categorie);
+//        if(!$categorie) throw  $this->createNotFoundException('La page n\'existe pas');
+//        
+//        $produits = $em->getRepository('EcommerceBundle:Produits')->byCategorie($categorie);
+//        return $this->render('EcommerceBundle:Default:produits/layout/produits.html.twig',array('produits'=>$produits));
+//    }
 
     public function produitAction($id)
     {

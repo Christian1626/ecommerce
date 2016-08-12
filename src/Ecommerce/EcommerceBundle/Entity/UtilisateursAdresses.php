@@ -79,7 +79,7 @@ class UtilisateursAdresses
     /**
      * @var string
      *
-     * @ORM\Column(name="complement", type="string", length=125)
+     * @ORM\Column(name="complement", type="string", length=125, nullable=true)
      */
     private $complement;
 

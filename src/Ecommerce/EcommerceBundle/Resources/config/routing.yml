@@ -21,7 +21,7 @@ ecommerce_validation:
     
 categorieProduits:
     path:     /categorie/{categorie}
-    defaults: { _controller: EcommerceBundle:Produits:categorie }
+    defaults: { _controller: EcommerceBundle:Produits:produits }
     
 
 rechercheProduits:
@@ -36,3 +36,10 @@ ajouter:
 supprimer:
     path:     /supprimer/{id}
     defaults: { _controller: EcommerceBundle:Panier:supprimer }
+    
+supprimmerAdresseLivraison:
+    path:     /supprimmerAdresseLivraison/{id}
+    defaults: { _controller: EcommerceBundle:Panier:supprimmerAdresseLivraison }
+    
+    
+    

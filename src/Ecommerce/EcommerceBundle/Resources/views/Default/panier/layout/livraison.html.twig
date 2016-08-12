@@ -8,67 +8,37 @@
                 <div id="collapseOne" class="accordion-body collapse in">
                     <div class="accordion-inner">
                         <div class="span4">
-                            <form action="{{ path('ecommerce_validation') }}">
+                            {% if utilisateur.adresses | length != 0 %}
+                            <form action="{{ path('ecommerce_validation') }}" method="POST">
                                 <h4>Adresse de livraison</h4>
+                                {% for adresse in utilisateur.adresses %}
                                 <label class="radio">
-                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                                    3b rue jules paulo, 75 000 Paris <a href="#"><i class="icon-trash"></i></a>
+                                    <input type="radio" name="livraison" id="livraison" value="{{ adresse.id }}" {% if loop.index0 == 0 %}checked="checked" {% endif %}>
+                                    {{ adresse.adresse }},{{ adresse.cp }} {{ adresse.ville }} - {{ adresse.pays }} <a href="{{ path('supprimmerAdresseLivraison',{'id':adresse.id})}}"><i class="icon-trash"></i></a><br/>
+                                    {{ adresse.prenom }} {{ adresse.nom }}
                                 </label>
+                                {% endfor %}
+                            <br/>
+                                
+                                <h4>Adresse de Facturation</h4>
+                                {% for adresse in utilisateur.adresses %}
                                 <label class="radio">
-                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                                    4b rue jules paulo, 75 000 Paris <a href="#"><i class="icon-trash"></i></a>
+                                    <input type="radio" name="facturation" id="facturation" value="{{ adresse.id }}" {% if loop.index0 == 0 %}checked="checked" {% endif %}>
+                                    {{ adresse.adresse }},{{ adresse.cp }} {{ adresse.ville }} - {{ adresse.pays }} <a href="#"><i class="icon-trash"></i></a><br/>
+                                    {{ adresse.prenom }} {{ adresse.nom }}
                                 </label>
-                                <label class="radio">
-                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                                    5b rue jules paulo, 75 000 Paris <a href="#"><i class="icon-trash"></i></a>
-                                </label>
-
-                                <br /><br />
-
-                                <h4>Adresse de facturation</h4>
-                                <label class="radio">
-                                    <input type="radio" name="optionsRadios2" id="optionsRadios1" value="option1" checked="">
-                                    3b rue jules paulo, 75 000 Paris <a href="#"><i class="icon-trash"></i></a>
-                                </label>
-                                <label class="radio">
-                                    <input type="radio" name="optionsRadios2" id="optionsRadios1" value="option1" checked="">
-                                    4b rue jules paulo, 75 000 Paris <a href="#"><i class="icon-trash"></i></a>
-                                </label>
-                                <label class="radio">
-                                    <input type="radio" name="optionsRadios2" id="optionsRadios1" value="option1" checked="">
-                                    5b rue jules paulo, 75 000 Paris <a href="#"><i class="icon-trash"></i></a>
-                                </label>
+                                {% endfor %}
                                 <button class="btn btn-primary">Valider mon adresse de livraison</button>
                             </form>
+                            {% endif %}
                         </div>
 
 
                         <div class="span4 offset2">
                             <h4>Ajouter une nouvelle adresse</h4>
-                            <form>
-                                <label>Nom</label>
-                                <input type="text">
-
-                                <label>Prénom</label>
-                                <input type="text">
-
-                                <label>Adresse</label>
-                                <input type="text">
-
-                                <label>Ville</label>
-                                <input type="text">
-
-                                <label>Code postal</label>
-                                <input type="text">
-
-                                <label>Ville</label>
-                                <input type="text">
-
-                                <label>Téléphone</label>
-                                <input type="text">
-
-                                <br />
-                                <button class="btn btn-primary">Ajouter</button>
+                            <form method="POST" action="{{ path('ecommerce_livraison') }}">
+                                {{ form(form) }}
+                                <button type='submit' class="btn btn-primary">Ajouter</button>
                             </form>
                         </div>
                     </div>
